@@ -13,7 +13,7 @@ properties(
           name: 'LIBRARIES_REPO'
         ),
         string(
-          defaultValue: 'v1.2.0',
+          defaultValue: 'dev-v1.2.1',
           description: 'Git reference to the branch or tag of shared libraries.',
           name: 'LIBRARIES_REF'
         ),
@@ -52,9 +52,26 @@ List arches = params.ARCHES.tokenize(',')
 def errorMessages = ''
 def config = MAQEAPI.v1.getProvisioningConfig(this)
 
-MAQEAPI.v1.runParallelMultiArchTest(
+
+def make_host(def arch) {
+  def target = MAQEAPI.v1.newTargetHost()
+  def s390x = (arch == 's390x')
+  def memory = s390x ? 4096 : 8192
+  def cpus = s390x ? 2 : 4
+
+  target.distro = "Fedora-29"
+  target.arch = arch
+  target.bkrHostRequires = [[tag:'memory', op:'>=',value:memory],
+                            [tag:'processors',op:'>=',value:cpus],
+                            [tag:'size',op:'>=',value:50000]]
+  return target
+}
+
+def target_hosts = arches.collect {make_host(it)}
+
+MAQEAPI.v1.runTest(
   this,
-  arches,
+  target_hosts,
   config,
   { host ->
     /*********************************************************/
