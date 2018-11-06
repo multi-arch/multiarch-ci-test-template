@@ -59,7 +59,7 @@ def make_host(def arch) {
   def memory = s390x ? 4096 : 8192
   def cpus = s390x ? 2 : 4
 
-  target.distro = "RHEL-ALT-7.5"
+  target.distro = "Fedora-28"
   target.arch = arch
 /*  target.bkrHostRequires = [[tag:'memory', op:'>=',value: memory],
                             [tag:'processors',op:'>=',value: cpus],
