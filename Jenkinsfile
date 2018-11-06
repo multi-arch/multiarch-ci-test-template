@@ -63,8 +63,8 @@ def make_host(def arch) {
   target.arch = arch
   target.variant = "Server"
   target.bkrHostRequires = [[tag:'memory', op:'>=',value: memory],
-                            [tag:'processors',op:'>=',value: cpus],
-                            [tag:'size',op:'>=',value: 50000]]
+                            [tag:'processors',op:'>=',value: cpus]]
+/*                            [tag:'size',op:'>=',value: 50000]] */
 
   return target
 }
