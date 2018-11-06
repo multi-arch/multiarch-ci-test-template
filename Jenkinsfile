@@ -61,9 +61,9 @@ def make_host(def arch) {
 
   target.distro = "Fedora-29"
   target.arch = arch
-  target.bkrHostRequires = [[tag:'memory', op:'>=',value:memory],
-                            [tag:'processors',op:'>=',value:cpus],
-                            [tag:'size',op:'>=',value:50000]]
+  target.bkrHostRequires = [[tag:'memory', op:'>=',value: memory],
+                            [tag:'processors',op:'>=',value: cpus]]
+  //                          [tag:'size',op:'>=',value: 50000]]
   return target
 }
 
