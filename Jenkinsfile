@@ -8,6 +8,16 @@ properties(
           name: 'ARCHES'
         ),
         string(
+          defaultValue: 'Fedora-29',
+          description: 'Distro to provision with.',
+          name: 'DISTRO'
+        ),
+        string(
+          defaultValue: 'Server',
+          description: 'Variant of distro.',
+          name: 'DISTRO_VARIANT'
+        ),
+        string(
           defaultValue: 'https://github.com/multi-arch/multiarch-ci-libraries',
           description: 'Repo for shared libraries.',
           name: 'LIBRARIES_REPO'
@@ -59,9 +69,9 @@ def make_host(def arch) {
   def memory = s390x ? 4096 : 8192
   def cpus = s390x ? 2 : 4
 
-  target.distro = "RHEL-ALT-7.5"
+  target.distro = params.DISTRO
   target.arch = arch
-  target.variant = "Server"
+  target.variant = params.DISTRO_VARIANT
   target.bkrHostRequires = [[tag:'memory', op:'>=',value: memory],
                             [tag:'processors',op:'>=',value: cpus],
                             [tag:'disk',op:'>=',value: 50000]]
